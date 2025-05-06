@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Favicon Generator</title>
+    <style>
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Helvetica, Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        .canvas-container {
+            margin-bottom: 20px;
+        }
+        canvas {
+            border: 1px solid #ccc;
+            margin-right: 10px;
+        }
+        button {
+            display: block;
+            margin: 10px 0;
+            padding: 8px 16px;
+            background: #0969da;
+            color: white;
+            border: none;
+            border-radius: 6px;
+            cursor: pointer;
+        }
+        h2 {
+            margin-top: 30px;
+        }
+    </style>
+</head>
+<body>
+    <h1>Simple Favicon Generator</h1>
+    <p>This page creates simple favicon images for the portfolio site. Right-click on each canvas and select "Save image as..." to save them to the favicon folder.</p>
+    
+    <h2>16x16 Favicon</h2>
+    <div class="canvas-container">
+        <canvas id="favicon16" width="16" height="16"></canvas>
+        <button onclick="downloadCanvas('favicon16', 'favicon-16x16.png')">Download favicon-16x16.png</button>
+    </div>
+    
+    <h2>32x32 Favicon</h2>
+    <div class="canvas-container">
+        <canvas id="favicon32" width="32" height="32"></canvas>
+        <button onclick="downloadCanvas('favicon32', 'favicon-32x32.png')">Download favicon-32x32.png</button>
+    </div>
+    
+    <h2>180x180 Apple Touch Icon</h2>
+    <div class="canvas-container">
+        <canvas id="appleTouchIcon" width="180" height="180"></canvas>
+        <button onclick="downloadCanvas('appleTouchIcon', 'apple-touch-icon.png')">Download apple-touch-icon.png</button>
+    </div>
+    
+    <h2>192x192 Android Chrome Icon</h2>
+    <div class="canvas-container">
+        <canvas id="androidChrome192" width="192" height="192"></canvas>
+        <button onclick="downloadCanvas('androidChrome192', 'android-chrome-192x192.png')">Download android-chrome-192x192.png</button>
+    </div>
+    
+    <h2>512x512 Android Chrome Icon</h2>
+    <div class="canvas-container">
+        <canvas id="androidChrome512" width="512" height="512"></canvas>
+        <button onclick="downloadCanvas('androidChrome512', 'android-chrome-512x512.png')">Download android-chrome-512x512.png</button>
+    </div>
+
+    <script>
+        // Function to draw the favicon with tech/circuit pattern
+        function drawFavicon(canvasId, size) {
+            const canvas = document.getElementById(canvasId);
+            const ctx = canvas.getContext('2d');
+            
+            // Background color
+            ctx.fillStyle = '#0969da';
+            ctx.fillRect(0, 0, size, size);
+            
+            // Initial letter (H for haadziq)
+            ctx.fillStyle = '#ffffff';
+            const fontSize = Math.floor(size * 0.7);
+            ctx.font = `bold ${fontSize}px Arial`;
+            ctx.textAlign = 'center';
+            ctx.textBaseline = 'middle';
+            ctx.fillText('H', size/2, size/2);
+            
+            // Add tech circuit pattern
+            ctx.strokeStyle = '#ddf4ff';
+            ctx.lineWidth = Math.max(1, Math.floor(size * 0.03));
+            
+            // Circuit lines
+            const padding = Math.floor(size * 0.1);
+            const lineSpacing = Math.floor(size * 0.2);
+            
+            // Draw a few circuit lines
+            ctx.beginPath();
+            ctx.moveTo(padding, padding);
+            ctx.lineTo(size - padding, padding);
+            ctx.stroke();
+            
+            ctx.beginPath();
+            ctx.moveTo(padding, size - padding);
+            ctx.lineTo(size - padding, size - padding);
+            ctx.stroke();
+            
+            // Draw dots at the corners
+            const dotSize = Math.max(1, Math.floor(size * 0.06));
+            ctx.fillStyle = '#ddf4ff';
+            
+            ctx.beginPath();
+            ctx.arc(padding, padding, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.arc(size - padding, padding, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.arc(padding, size - padding, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+            
+            ctx.beginPath();
+            ctx.arc(size - padding, size - padding, dotSize, 0, Math.PI * 2);
+            ctx.fill();
+        }
+        
+        // Function to download canvas as image
+        function downloadCanvas(canvasId, filename) {
+            const canvas = document.getElementById(canvasId);
+            const link = document.createElement('a');
+            link.download = filename;
+            link.href = canvas.toDataURL('image/png');
+            link.click();
+        }
+        
+        // Draw all favicons
+        window.onload = function() {
+            drawFavicon('favicon16', 16);
+            drawFavicon('favicon32', 32);
+            drawFavicon('appleTouchIcon', 180);
+            drawFavicon('androidChrome192', 192);
+            drawFavicon('androidChrome512', 512);
+        };
+    </script>
+</body>
+</html> 
